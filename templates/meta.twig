@@ -4,3 +4,7 @@
 {%- if entry.metaDescription|default %}
 	<meta name="description" content="{{ entry.metaDescription }}">
 {% endif %}
+
+{%- if entry.noIndex|default %}
+	 <meta name="robots" content="noindex, follow">
+{% endif %}
