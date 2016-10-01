@@ -9,4 +9,8 @@
 	 <meta name="robots" content="noindex, follow">
 {% endif %}
 
-<link rel="canonical" href="{{ entry.url|default(craft.request.url) }}">{% endif %}
+<link rel="canonical" href="{{ entry.url|default(craft.request.url) }}">
+
+{% if settings.googleId|default %}
+	<link rel="publisher" href="https://plus.google.com/{{ settings.googleId }}">
+{% endif %}

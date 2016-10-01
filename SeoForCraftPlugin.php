@@ -57,13 +57,6 @@ class SeoForCraftPlugin extends BasePlugin
 		return craft()->path->getPluginsPath() . 'seoforcraft/resources/icon.svg';
 	}
 
-	protected function defineSettings()
-	{
-		return array(
-			'metaGroupId' => array(AttributeType::String)
-		);
-	}
-
 	public function onAfterInstall()
 	{
 		craft()->seoForCraft->installGroups();
@@ -95,5 +88,20 @@ class SeoForCraftPlugin extends BasePlugin
 
 			return $output;
 		});
+	}
+
+	public function getSettingsHtml()
+	{
+		return craft()->templates->render('seoforcraft/settings', array(
+			'settings' => $this->getSettings()
+		));
+	}
+
+	protected function defineSettings()
+	{
+		return array(
+			'metaGroupId' => array(AttributeType::String),
+			'googleId' => array(AttributeType::String)
+		);
 	}
 }

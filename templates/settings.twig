@@ -1,0 +1,11 @@
+{% import "_includes/forms" as forms %}
+
+
+{{ forms.textField({
+	label: 'Google Page ID'|t,
+	name: 'googleId',
+	instructions: 'Google Business Profile ID (number or +handle)',
+	value: settings.googleId,
+	autofocus: true,
+	errors: settings.getErrors('googleId')
+}) }}
