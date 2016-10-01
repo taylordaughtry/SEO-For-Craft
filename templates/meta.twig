@@ -8,3 +8,5 @@
 {%- if entry.noIndex|default %}
 	 <meta name="robots" content="noindex, follow">
 {% endif %}
+
+<link rel="canonical" href="{{ entry.url|default(craft.request.url) }}">{% endif %}
