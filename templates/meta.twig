@@ -1,0 +1,6 @@
+{# TODO: Add optional Suffix for titles #}
+<title>{% if entry.metaTitle|default %}{{ entry.metaTitle }}{% else %}{{ entry.title }}{% endif %}</title>
+
+{%- if entry.metaDescription|default %}
+	<meta name="description" content="{{ entry.metaDescription }}">
+{% endif %}

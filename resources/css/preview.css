@@ -1,0 +1,22 @@
+.snippet {
+	font-family: Arial;
+	font-size: 13px;
+	line-height: 18px;
+	margin-top: 6px;
+	max-width: 522px;
+}
+.snippet__desc {
+	color: #545454;
+}
+.snippet__date {
+	color: #808080;
+}
+.snippet__title {
+	color: #1a0dab;
+	display: block;
+	font-size: 18px;
+	line-height: 21px;
+}
+.snippet__url {
+	color: #006621;
+}

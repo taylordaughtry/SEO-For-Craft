@@ -1,0 +1,7 @@
+<div class="snippet">
+	<span class="snippet__title" data-ref="metaTitle">{% if context.metaTitle|default %}{{ context.metaTitle }}{% else %}{{ context.title }}{% endif %}</span>
+	<span class="snippet__url">{% if context.url|default %}{{ context.url }}{% endif %}</span>
+	<div class="snippet__desc">
+		<span class="snippet__date">{{ context.dateCreated|date('F j, Y') }} -</span> <span data-ref="metaDescription">{% if context.metaDescription|default %}{{ context.metaDescription }}{% else %}<em>You haven't set a Meta Description yet.</em>{% endif %}</span>
+	</div>
+</div>
