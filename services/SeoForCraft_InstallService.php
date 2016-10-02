@@ -3,6 +3,19 @@ namespace Craft;
 
 class SeoForCraft_InstallService extends BaseApplicationComponent
 {
+	public function install()
+	{
+		$this->installGroups();
+		$this->installFields();
+		$this->installTransforms();
+	}
+
+	public function uninstall()
+	{
+		$this->unInstallGroups();
+		$this->unInstallTransforms();
+	}
+
 	public function installGroups()
 	{
 		$group = new FieldGroupModel();
@@ -10,12 +23,8 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 
 		// TODO: Handle situation where a 'Metadata' field group already exists.
 		if (craft()->fields->saveGroup($group)) {
-			$this->installFields($group->id);
-
 			craft()->seoForCraft->saveSetting('metaGroupId', $group->id);
 		}
-
-		$this->installTransforms();
 	}
 
 	public function unInstallGroups()
@@ -23,7 +32,7 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		craft()->fields->deleteGroupById(craft()->seoForCraft->getSetting('metaGroupId'));
 	}
 
-	public function installFields($groupId)
+	public function installFields()
 	{
 		$fields = array(
 			array(
@@ -97,6 +106,8 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 				)
 			)
 		);
+
+		$groupId = craft()->seoForCraft->getSetting('metaGroupId');
 
 		foreach ($fields as $field) {
 			$model = new FieldModel();
