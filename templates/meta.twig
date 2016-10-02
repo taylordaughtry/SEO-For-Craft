@@ -28,3 +28,8 @@
 {% elseif settings.socialImage|default|length %}
 	<meta property="og:image" content="{{ craft.assets.id(settings.socialImage[0]).first.geturl('ogImageTransform') }}" itemprop="image">
 {% endif %}
+
+{% if settings.twitterHandle|default %}
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@{{ settings.twitterHandle }}">
+{% endif %}

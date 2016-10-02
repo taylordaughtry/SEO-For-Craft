@@ -105,6 +105,13 @@ class SeoForCraftPlugin extends BasePlugin
 		));
 	}
 
+	public function prepSettings($settings)
+	{
+		$settings['twitterHandle'] = str_replace('@', '', $settings['twitterHandle']);
+
+		return $settings;
+	}
+
 	protected function defineSettings()
 	{
 		return array(
@@ -112,7 +119,8 @@ class SeoForCraftPlugin extends BasePlugin
 			'transformId' => array(AttributeType::Number),
 			'sourceId' => array(AttributeType::Number),
 			'socialImage' => array(AttributeType::String),
-			'googleId' => array(AttributeType::String)
+			'googleId' => array(AttributeType::String),
+			'twitterHandle' => array(AttributeType::String)
 		);
 	}
 }

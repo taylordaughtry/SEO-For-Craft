@@ -10,6 +10,14 @@
 	errors: settings.getErrors('googleId')
 }) }}
 
+{{ forms.textField({
+	label: 'Twitter Handle'|t,
+	name: 'twitterHandle',
+	instructions: 'This is required to display Twitter Card meta tags. Leave off the @ symbol.',
+	value: settings.twitterHandle,
+	errors: settings.getErrors('twitterHandle')
+}) }}
+
 {{ forms.elementSelect({
     id: 'socialImage',
     name: 'socialImage',
