@@ -127,5 +127,14 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		$transform->quality = 82;
 
 		craft()->assetTransforms->saveTransform($transform);
+
+		craft()->seoForCraft->saveSetting('transformId', $transform->id);
+	}
+
+	public function unInstallTransforms()
+	{
+		$id = craft()->seoForCraft->getSetting('transformId');
+
+		craft()->assetTransforms->deleteTransform($id);
 	}
 }

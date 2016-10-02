@@ -101,6 +101,7 @@ class SeoForCraftPlugin extends BasePlugin
 	{
 		return array(
 			'metaGroupId' => array(AttributeType::String),
+			'transformId' => array(AttributeType::Number),
 			'googleId' => array(AttributeType::String)
 		);
 	}
