@@ -45,9 +45,12 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		$group = new FieldGroupModel();
 		$group->name = 'Metadata';
 
-		// TODO: Handle situation where a 'Metadata' field group already exists.
 		if (craft()->fields->saveGroup($group)) {
+			SeoForCraftPlugin::log('\'Metadata\' Field Group created.', LogLevel::Info, true);
+
 			craft()->seoForCraft->saveSetting('metaGroupId', $group->id);
+		} else {
+			SeoForCraftPlugin::log('A \'Metadata\' Field Group is already present.', LogLevel::Warning, true);
 		}
 	}
 
@@ -179,7 +182,7 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 			$model->settings = $field['settings'];
 
 			if (! craft()->fields->saveField($model)) {
-				Craft::log('Could not save the ' . $field['name'] . ' field.', LogLevel::Warning);
+				SeoForCraftPlugin::log('Could not save the ' . $field['name'] . ' field.', LogLevel::Warning, true);
 			}
 		}
 	}
@@ -201,6 +204,8 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		$transform->quality = 82;
 
 		craft()->assetTransforms->saveTransform($transform);
+
+		SeoForCraftPlugin::log('\'Open Graph Image\' Transform created.', LogLevel::Info, true);
 
 		craft()->seoForCraft->saveSetting('transformId', $transform->id);
 	}
@@ -239,6 +244,8 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		);
 
 		craft()->assetSources->saveSource($source);
+
+		SeoForCraftPlugin::log('\'Root\' Asset Source created.', LogLevel::Info, true);
 
 		craft()->seoForCraft->saveSetting('sourceId', $source->id);
 	}
