@@ -100,7 +100,8 @@ class SeoForCraftPlugin extends BasePlugin
 	public function getSettingsHtml()
 	{
 		return craft()->templates->render('seoforcraft/settings', array(
-			'settings' => $this->getSettings()
+			'settings' => $this->getSettings(),
+			'elementType' => craft()->elements->getElementType(ElementType::Asset)
 		));
 	}
 
@@ -109,6 +110,8 @@ class SeoForCraftPlugin extends BasePlugin
 		return array(
 			'metaGroupId' => array(AttributeType::String),
 			'transformId' => array(AttributeType::Number),
+			'sourceId' => array(AttributeType::Number),
+			'socialImage' => array(AttributeType::String),
 			'googleId' => array(AttributeType::String)
 		);
 	}

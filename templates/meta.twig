@@ -19,6 +19,12 @@
 <meta property="og:site_name" content="{{ siteName }}">
 <meta property="og:url" content="{{ entry.url|default(craft.request.url) }}" itemprop="url">
 <meta property="og:title" content="{% if entry.ogTitle|default %}{{ entry.ogTitle }}{% elseif entry.metaTitle|default %}{{ entry.metaTitle }}{% else %}{{ entry.title }}{% endif %}" itemprop="name">
-{% if entry.ogDescription|default or entry.metaDescription|default %}
+{% if entry.ogDescription|default or entry.metaDescription|default -%}
 	<meta property="og:description" content="{% if entry.ogDescription|default %}{{ entry.ogDescription }}{% elseif entry.metaDescription %}{{ entry.metaDescription }}{% endif %}" itemprop="description">
+{% endif %}
+
+{% if entry.ogImage|default -%}
+	<meta property="og:image" content="{{ entry.ogImage.first.getUrl('ogImageTransform') }}" itemprop="image">
+{% elseif settings.socialImage|default|length %}
+	<meta property="og:image" content="{{ craft.assets.id(settings.socialImage[0]).first.geturl('ogImageTransform') }}" itemprop="image">
 {% endif %}

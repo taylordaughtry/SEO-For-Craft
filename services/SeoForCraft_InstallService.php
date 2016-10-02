@@ -15,6 +15,7 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		$this->installGroups();
 		$this->installFields();
 		$this->installTransforms();
+		$this->installSources();
 	}
 
 	/**
@@ -29,6 +30,7 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 	{
 		$this->unInstallGroups();
 		$this->unInstallTransforms();
+		$this->unInstallSources();
 	}
 
 	/**
@@ -144,6 +146,23 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 				'settings' => array(
 					'maxLength' => '200'
 				)
+			),
+			array(
+				'name' => 'Open Graph Image',
+				'handle' => 'ogImage',
+				'instructions' => 'Upload an image that\'s at least 1200 x 630, in any valid image format.',
+				'type' => 'Assets',
+				'settings' => array(
+					'useSingleFolder' => 1,
+					'singleUploadLocationSource' => craft()->seoForCraft->getSetting('sourceId'),
+					'restrictFiles' => 1,
+					'allowedKinds' => array(
+						'image'
+					),
+					'limit' => 1,
+					'viewMode' => 'large',
+					'selectionLabel' => 'Add an Image'
+				)
 			)
 		);
 
@@ -197,5 +216,43 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		$id = craft()->seoForCraft->getSetting('transformId');
 
 		craft()->assetTransforms->deleteTransform($id);
+	}
+
+	/**
+	 * Adds a source for the root directory of the website. The root directory
+	 * is where many popular social services look for social images. However,
+	 * this location can be modified to fit your project if needed; just update
+	 * the source after installation.
+	 *
+	 * @public
+	 * @return void
+	 */
+	public function installSources()
+	{
+		$source = new AssetSourceModel();
+		$source->name = 'Root';
+		$source->handle = 'root';
+		$source->settings = array(
+			'path' => $_SERVER['DOCUMENT_ROOT'],
+			'url' => '/',
+			'publicURLs' => 1
+		);
+
+		craft()->assetSources->saveSource($source);
+
+		craft()->seoForCraft->saveSetting('sourceId', $source->id);
+	}
+
+	/**
+	 * Removes the sources installed by this plugin.
+	 *
+	 * @public
+	 * @return void
+	 */
+	public function unInstallSources()
+	{
+		$id = craft()->seoForCraft->getSetting('sourceId');
+
+		craft()->assetSources->deleteSourceById($id);
 	}
 }

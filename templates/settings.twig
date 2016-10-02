@@ -9,3 +9,19 @@
 	autofocus: true,
 	errors: settings.getErrors('googleId')
 }) }}
+
+{{ forms.elementSelect({
+    id: 'socialImage',
+    name: 'socialImage',
+    elementType: elementType,
+    criteria: {
+        'kind': ['image'],
+        'localeEnabled': null,
+        'locale': craft.locale
+    },
+    sourceElementId: null,
+    sources: settings.sourceId,
+    jsClass: 'Craft.AssetSelectInput',
+    addButtonLabel: "Select a Default Social Image" |t,
+    limit: 1
+}) }}
