@@ -59,12 +59,12 @@ class SeoForCraftPlugin extends BasePlugin
 
 	public function onAfterInstall()
 	{
-		craft()->seoForCraft->installGroups();
+		craft()->seoForCraft_install->installGroups();
 	}
 
 	public function onBeforeUninstall()
 	{
-		craft()->seoForCraft->unInstallGroups();
+		craft()->seoForCraft_install->unInstallGroups();
 	}
 
 	public function init()
