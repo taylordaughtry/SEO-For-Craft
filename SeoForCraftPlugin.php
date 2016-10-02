@@ -107,7 +107,9 @@ class SeoForCraftPlugin extends BasePlugin
 
 	public function prepSettings($settings)
 	{
-		$settings['twitterHandle'] = str_replace('@', '', $settings['twitterHandle']);
+		if (isset($settings['twitterHandle'])) {
+			$settings['twitterHandle'] = str_replace('@', '', $settings['twitterHandle']);
+		}
 
 		return $settings;
 	}
