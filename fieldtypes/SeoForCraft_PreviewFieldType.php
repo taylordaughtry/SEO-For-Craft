@@ -14,6 +14,16 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
         return false;
     }
 
+    /**
+     * This method generates the 'Snippet Preview' element on entry detail
+     * pages. Note that this fieldtype does not store data, and simply servces
+     * as an easy way to add HTML to the page for the user's visual reference.
+     *
+     * @public
+     * @param string $name The field name
+     * @param string $value The stored value
+     * @return string The HTML required to display the element
+     */
     public function getInputHtml($name, $value)
     {
         $oldPath = craft()->path->getTemplatesPath();

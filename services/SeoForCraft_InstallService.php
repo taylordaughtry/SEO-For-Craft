@@ -3,6 +3,13 @@ namespace Craft;
 
 class SeoForCraft_InstallService extends BaseApplicationComponent
 {
+	/**
+	 * This installs all required elements for the plugin. That includes
+	 * transforms, fields, and field groups.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function install()
 	{
 		$this->installGroups();
@@ -10,12 +17,27 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		$this->installTransforms();
 	}
 
+	/**
+	 * Cleanly removes all elements this plugin has added. If you're wondering
+	 * where the 'uninstallFields' method is, Craft automatically removes
+	 * fields whose parent field group has been removed.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function uninstall()
 	{
 		$this->unInstallGroups();
 		$this->unInstallTransforms();
 	}
 
+	/**
+	 * Creates a 'Metadata' field group so all the plugin's fields can be
+	 * easily referenced.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function installGroups()
 	{
 		$group = new FieldGroupModel();
@@ -27,11 +49,29 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		}
 	}
 
+	/**
+	 * Removes the 'Metadata' field group added by the plugin, along with all
+	 * its fields.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function unInstallGroups()
 	{
 		craft()->fields->deleteGroupById(craft()->seoForCraft->getSetting('metaGroupId'));
 	}
 
+	/**
+	 * Adds fields required by the plugin. These can be easily added to any
+	 * Section by dragging the 'Metadata' field group into any section layout.
+	 *
+	 * This method takes a DRY approach to field creation; the $field array
+	 * stores any dynamic values for each field. Then this array is used at the
+	 * bottom to create each field using those dynamic values.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function installFields()
 	{
 		$fields = array(
@@ -128,6 +168,13 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		}
 	}
 
+	/**
+	 * Adds the required transforms. These dimensions are pulled directly from
+	 * their respective sites' optimal dimension suggestions.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function installTransforms()
 	{
 		$transform = new AssetTransformModel();
@@ -142,6 +189,12 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 		craft()->seoForCraft->saveSetting('transformId', $transform->id);
 	}
 
+	/**
+	 * Uninstalls all transforms added by the plugin.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function unInstallTransforms()
 	{
 		$id = craft()->seoForCraft->getSetting('transformId');

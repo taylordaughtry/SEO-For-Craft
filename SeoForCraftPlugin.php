@@ -67,6 +67,13 @@ class SeoForCraftPlugin extends BasePlugin
 		craft()->seoForCraft_install->uninstall();
 	}
 
+	/**
+	 * Generates the hook that allows you to call `{% hook 'generateMeta' %}
+	 * inside your templates.
+	 *
+	 * @public
+	 * @return void
+	 */
 	public function init()
 	{
 		parent::init();
