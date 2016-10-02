@@ -159,11 +159,8 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 			$model->type         = $field['type'];
 			$model->settings = $field['settings'];
 
-			if (! craft()->fields->saveField($model))
-			{
+			if (! craft()->fields->saveField($model)) {
 				Craft::log('Could not save the ' . $field['name'] . ' field.', LogLevel::Warning);
-
-				return false;
 			}
 		}
 	}
