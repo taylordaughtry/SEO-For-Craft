@@ -14,3 +14,11 @@
 {% if settings.googleId|default %}
 	<link rel="publisher" href="https://plus.google.com/{{ settings.googleId }}">
 {% endif %}
+
+<meta property="og:type" content="{% if entry.ogType.value|default %}{{ entry.ogType.value }}{% else %}website{% endif %}">
+<meta property="og:site_name" content="{{ siteName }}">
+<meta property="og:url" content="{{ entry.url|default(craft.request.url) }}" itemprop="url">
+<meta property="og:title" content="{% if entry.ogTitle|default %}{{ entry.ogTitle }}{% elseif entry.metaTitle|default %}{{ entry.metaTitle }}{% else %}{{ entry.title }}{% endif %}" itemprop="name">
+{% if entry.ogDescription|default or entry.metaDescription|default %}
+	<meta property="og:description" content="{% if entry.ogDescription|default %}{{ entry.ogDescription }}{% elseif entry.metaDescription %}{{ entry.metaDescription }}{% endif %}" itemprop="description">
+{% endif %}
