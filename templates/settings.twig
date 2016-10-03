@@ -17,17 +17,28 @@
 	errors: settings.getErrors('twitterHandle')
 }) }}
 
-{{ forms.elementSelect({
-    id: 'socialImage',
-    name: 'socialImage',
-    elementType: elementType,
-    elements: elements,
-    criteria: {
-        'kind': ['image'],
-        'localeEnabled': null,
-        'locale': craft.locale
-    },
-    jsClass: 'Craft.AssetSelectInput',
-    addButtonLabel: "Select a Default Social Image" |t,
-    limit: 1
-}) }}
+<div class="field">
+    <div class="heading">
+        <label for="socialImage">Social Image</label>
+        <div class="instructions">
+            <p>Specify a default Image to use on entries that don't have any Open Graph image set.</p>
+        </div>
+    </div>
+    <div class="input">
+        {{ forms.elementSelect({
+            id: 'socialImage',
+            name: 'socialImage',
+            elementType: elementType,
+            instructions: 'Test Instructions',
+            elements: elements,
+            criteria: {
+                'kind': ['image'],
+                'localeEnabled': null,
+                'locale': craft.locale
+            },
+            jsClass: 'Craft.AssetSelectInput',
+            addButtonLabel: "Select a Default Social Image" |t,
+            limit: 1
+        }) }}
+    </div>
+</div>
