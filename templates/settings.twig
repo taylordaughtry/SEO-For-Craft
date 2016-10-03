@@ -1,6 +1,5 @@
 {% import "_includes/forms" as forms %}
 
-
 {{ forms.textField({
 	label: 'Google Page ID'|t,
 	name: 'googleId',
@@ -22,13 +21,12 @@
     id: 'socialImage',
     name: 'socialImage',
     elementType: elementType,
+    elements: elements,
     criteria: {
         'kind': ['image'],
         'localeEnabled': null,
         'locale': craft.locale
     },
-    sourceElementId: null,
-    sources: settings.sourceId,
     jsClass: 'Craft.AssetSelectInput',
     addButtonLabel: "Select a Default Social Image" |t,
     limit: 1
