@@ -16,7 +16,9 @@ class SeoForCraftService extends BaseApplicationComponent
 	{
 		$settings = craft()->plugins->getPlugin('SeoForCraft')->getSettings();
 
-		return $settings[$key];
+		$val = $settings[$key];
+
+		return array_shift($val);
 	}
 
 	/**
