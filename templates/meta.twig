@@ -26,9 +26,9 @@
 {%- if entry.ogType.value|default and entry.ogType.value == 'article' -%}
 	<meta property="article:published_time" content="{{ entry.dateCreated.iso8601 }}" itemprop="datePublished">
 	<meta property="article:modified_time" content="{{ entry.dateUpdated.iso8601 }}" itemprop="dateModified">
-{%- endif -%}
+{%- endif %}
 
-{% if entry.ogImage|default -%}
+{% if entry.ogImage|default %}
 	<meta property="og:image" content="{{ entry.ogImage.first.getUrl('ogImageTransform') }}" itemprop="image">
 {% elseif settings.socialImage|default|length %}
 	<meta property="og:image" content="{{ craft.assets.id(settings.socialImage[0]).first.geturl('ogImageTransform') }}" itemprop="image">
