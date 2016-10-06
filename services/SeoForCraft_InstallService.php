@@ -196,18 +196,49 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 	 */
 	public function installTransforms()
 	{
-		$transform = new AssetTransformModel();
-		$transform->name = 'Open Graph Image Transform';
-		$transform->handle = 'ogImageTransform';
-		$transform->width = 1200;
-		$transform->height = 630;
-		$transform->quality = 82;
+		$transforms = array(
+			array(
+				'name' => 'Open Graph Image Transform',
+				'handle' => 'ogImageTransform',
+				'width' => 1200,
+				'height' => 630,
+				'quality' => 82
+			),
+			array(
+				'name' => 'Twitter Image Transform',
+				'handle' => 'twitterImageTransform',
+				'width' => 120,
+				'height' => 120,
+				'quality' => 82
+			),
+			array(
+				'name' => 'Twitter Large Image Transform',
+				'handle' => 'twitterLargeImageTransform',
+				'width' => 280,
+				'height' => 150,
+				'quality' => 82
+			),
+		);
 
-		craft()->assetTransforms->saveTransform($transform);
+		$ids = [];
 
-		SeoForCraftPlugin::log('\'Open Graph Image\' Transform created.', LogLevel::Info, true);
+		foreach ($transforms as $transform) {
+			$model = new AssetTransformModel();
 
-		craft()->seoForCraft->saveSetting('transformId', $transform->id);
+			$model->name = $transform['name'];
+			$model->handle = $transform['handle'];
+			$model->width = $transform['width'];
+			$model->height = $transform['height'];
+			$model->quality = $transform['quality'];
+
+			if (! craft()->assetTransforms->saveTransform($model)) {
+				SeoForCraftPlugin::log('Could not create \'' . $model['name'] . '\' Transform.', LogLevel::Info, true);
+			} else {
+				$ids[] = $model->id;
+			}
+		}
+
+		craft()->seoForCraft->saveSetting('transformIds', base64_encode(serialize($ids)));
 	}
 
 	/**
@@ -218,9 +249,15 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 	 */
 	public function unInstallTransforms()
 	{
-		$id = craft()->seoForCraft->getSetting('transformId');
+		$ids = craft()->seoForCraft->getSetting('transformIds');
 
-		craft()->assetTransforms->deleteTransform($id);
+		if ($ids) {
+			$ids = unserialize(base64_decode($ids));
+
+			foreach ($ids as $id) {
+				craft()->assetTransforms->deleteTransform($id);
+			}
+		}
 	}
 
 	/**
