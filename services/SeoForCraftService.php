@@ -18,7 +18,7 @@ class SeoForCraftService extends BaseApplicationComponent
 
 		$val = $settings[$key];
 
-		return array_shift($val);
+		return $val;
 	}
 
 	/**
