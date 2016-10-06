@@ -166,6 +166,76 @@ class SeoForCraft_InstallService extends BaseApplicationComponent
 					'viewMode' => 'large',
 					'selectionLabel' => 'Add an Image'
 				)
+			),
+			array(
+				'name' => 'Twitter Title',
+				'handle' => 'twitterTitle',
+				'instructions' => 'Specify an optional title to be displayed on the Twitter Card.',
+				'type' => 'PlainText',
+				'settings' => array(
+					'maxLength' => '140'
+				)
+			),
+			array(
+				'name' => 'Twitter Description',
+				'handle' => 'twitterDescription',
+				'instructions' => 'Specify an optional description to be displayed on the Twitter Card.',
+				'type' => 'PlainText',
+				'settings' => array(
+					'maxLength' => '200'
+				)
+			),
+			array(
+				'name' => 'Twitter Image',
+				'handle' => 'twitterImage',
+				'instructions' => 'Upload an image that\'s at least 120 x 120, in any valid image format.',
+				'type' => 'Assets',
+				'settings' => array(
+					'useSingleFolder' => 1,
+					'singleUploadLocationSource' => craft()->seoForCraft->getSetting('sourceId'),
+					'restrictFiles' => 1,
+					'allowedKinds' => array(
+						'image'
+					),
+					'limit' => 1,
+					'viewMode' => 'large',
+					'selectionLabel' => 'Add an Image'
+				)
+			),
+			array(
+				'name' => 'Twitter Large Image',
+				'handle' => 'twitterLargeImage',
+				'instructions' => 'Upload an image that\'s at least 280 x 150, in any valid image format.',
+				'type' => 'Assets',
+				'settings' => array(
+					'useSingleFolder' => 1,
+					'singleUploadLocationSource' => craft()->seoForCraft->getSetting('sourceId'),
+					'restrictFiles' => 1,
+					'allowedKinds' => array(
+						'image'
+					),
+					'limit' => 1,
+					'viewMode' => 'large',
+					'selectionLabel' => 'Add an Image'
+				)
+			),
+			array(
+				'name' => 'Twitter Type',
+				'handle' => 'twitterType',
+				'instructions' => 'What type should this entry be?',
+				'type' => 'Dropdown',
+				'settings' => array(
+					'options' => array(
+						array(
+							'label' => 'Summary',
+							'value' => 'summary'
+						),
+						array(
+							'label' => 'Summary Large Image',
+							'value' => 'summaryLargeImage'
+						)
+					)
+				)
 			)
 		);
 

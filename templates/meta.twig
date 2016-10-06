@@ -37,4 +37,17 @@
 {% if settings.twitterHandle|default %}
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="@{{ settings.twitterHandle }}">
+	{% if entry.twitterTitle|default %}
+		<meta name="twitter:title" content="{{ entry.twitterTitle }}">
+	{% endif %}
+	{% if entry.twitterDescription|default %}
+		<meta name="twitter:description" content="{{ entry.twitterDescription }}">
+	{% endif %}
+	{% if entry.twitterType|default %}
+		{% if entry.twitterType == 'summaryLargeImage' %}
+			<meta name="twitter:image" content="{{ entry.twitterLargeImage.first.getUrl('twitterLargeImageTransform') }}">
+		{% elseif entry.twitterType == 'summary' %}
+			<meta name="twitter:image" content="{{ entry.twitterImage.first.getUrl('twitterImageTransform') }}">
+		{% endif %}
+	{% endif %}
 {% endif %}
