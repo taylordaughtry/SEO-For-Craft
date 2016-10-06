@@ -100,7 +100,7 @@ class SeoForCraftPlugin extends BasePlugin
 	public function getSettingsHtml()
 	{
 		$socialImageId = craft()->seoForCraft->getSetting('socialImage');
-		$asset = craft()->elements->getElementById($socialImageId);
+		$asset = craft()->assets->getFileById($socialImageId);
 
 		return craft()->templates->render('seoforcraft/settings', array(
 			'settings' => $this->getSettings(),
