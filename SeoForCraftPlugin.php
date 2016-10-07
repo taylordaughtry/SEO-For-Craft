@@ -69,7 +69,10 @@ class SeoForCraftPlugin extends BasePlugin
 
 	/**
 	 * Generates the hook that allows you to call `{% hook 'generateMeta' %}
-	 * inside your templates.
+	 * inside your templates, and adds the content analysis information to the
+	 * entry sidebar.
+	 *
+	 * TODO: Abstract the plugin path switching to another method
 	 *
 	 * @public
 	 * @return void
@@ -90,6 +93,26 @@ class SeoForCraftPlugin extends BasePlugin
 			);
 
 			$output = craft()->templates->render('meta', $data);
+
+			craft()->path->setTemplatesPath($oldPath);
+
+			return $output;
+		});
+
+		craft()->templates->hook('cp.entries.edit.right-pane', function(&$context) {
+			$oldPath = craft()->path->getTemplatesPath();
+			$newPath = craft()->path->getPluginsPath().'seoforcraft/templates';
+
+			craft()->path->setTemplatesPath($newPath);
+
+			$data = array(
+				'settings' => craft()->plugins->getPlugin('SeoForCraft')->getSettings(),
+				'entry' => $context['entry']
+			);
+
+			craft()->templates->includeCssResource('seoforcraft/css/analysis.css');
+
+			$output = craft()->templates->render('analysis', $data);
 
 			craft()->path->setTemplatesPath($oldPath);
 
