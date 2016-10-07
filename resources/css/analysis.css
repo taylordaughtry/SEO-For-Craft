@@ -7,6 +7,9 @@
 	padding-left: 36px;
 	position: relative;
 }
+.analysis__item:last-child {
+	margin-bottom: 0;
+}
 .positive:before,
 .negative:before,
 .acceptable:before {
@@ -26,7 +29,4 @@
 }
 .negative:before {
 	background: #ff4750;
-}
-.analysis__item:last-child {
-	margin-bottom: 0;
 }
