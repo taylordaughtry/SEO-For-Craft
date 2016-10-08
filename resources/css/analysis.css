@@ -1,8 +1,8 @@
 .analysis__item {
 	color: #686868;
 	display: block;
-	font-size: 13px;
-	line-height: 18px;
+	font-size: 12px;
+	line-height: 17px;
 	margin-bottom: 12px;
 	padding-left: 36px;
 	position: relative;
@@ -17,12 +17,12 @@
 	border-radius: 3px;
 	content: '';
 	display: block;
-	height: 15px;
+	height: 14px;
 	left: 0;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-55%);
-	width: 15px;
+	width: 14px;
 }
 .acceptable:before {
 	background: #ffab47;
