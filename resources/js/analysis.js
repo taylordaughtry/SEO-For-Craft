@@ -6,6 +6,8 @@ var analyzer = (function() {
 			idealTitle: 'Your title is an ideal length.',
 			shortTitle: 'Your title is too short.',
 			longTitle: 'Your title is too long.',
+			noTitleKeyword: 'Your keyword isn\'t in the title.',
+			titleKeyword: 'Your keyword appears in the title.',
 			noKeyword: 'You don\'t have a focus keyword set.'
 		};
 
@@ -28,6 +30,12 @@ var analyzer = (function() {
 			_addItem(responses.shortTitle, 'negative');
 		} else if (length > 60) {
 			_addItem(responses.longTitle, 'negative');
+		}
+
+		if (title.value.indexOf(focusKeyword) > -1) {
+			_addItem(responses.titleKeyword, 'positive');
+		} else {
+			_addItem(responses.noTitleKeyword, 'negative');
 		}
 	};
 
