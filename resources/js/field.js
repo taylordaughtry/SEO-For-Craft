@@ -1,4 +1,4 @@
-var app = (function() {
+var fieldHandler = (function() {
 	/**
 	 * Binds an input field with its corresponding preview element. Used in the
 	 * 'Snippet Preview' field to show what a title/description look like.
@@ -53,12 +53,12 @@ var app = (function() {
 	function _handleTypes (value) {
 		switch (value) {
 			case 'summaryLargeImage':
-				app.toggleField('twitterLargeImage');
-				app.toggleField('twitterImage');
+				fieldHandler.toggleField('twitterLargeImage');
+				fieldHandler.toggleField('twitterImage');
 				break;
 			case 'summary':
-				app.toggleField('twitterLargeImage');
-				app.toggleField('twitterImage');
+				fieldHandler.toggleField('twitterLargeImage');
+				fieldHandler.toggleField('twitterImage');
 				break;
 		}
 	}
@@ -71,19 +71,19 @@ var app = (function() {
 	}
 })();
 
-app.ready(function() {
+fieldHandler.ready(function() {
 	var twitterType = document.querySelectorAll('select[name*="twitterType"]')[0];
 
-	app.bind('metaTitle');
-	app.bind('metaDescription');
+	fieldHandler.bind('metaTitle');
+	fieldHandler.bind('metaDescription');
 
 	if (twitterType.value === 'summmaryLargeImage') {
-		app.toggleField('twitterLargeImage');
+		fieldHandler.toggleField('twitterLargeImage');
 	} else {
-		app.toggleField('twitterImage');
+		fieldHandler.toggleField('twitterImage');
 	}
 
 	twitterType.addEventListener('change', function() {
-		app.handleTypes(this.value);
+		fieldHandler.handleTypes(this.value);
 	});
 });

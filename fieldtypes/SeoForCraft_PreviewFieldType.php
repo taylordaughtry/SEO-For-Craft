@@ -30,8 +30,8 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
         $newPath = craft()->path->getPluginsPath().'seoforcraft/templates';
         craft()->path->setTemplatesPath($newPath);
 
-        craft()->templates->includeCssResource('seoforcraft/css/preview.css');
-        craft()->templates->includeJsResource('seoforcraft/js/preview.js');
+        craft()->templates->includeCssResource('seoforcraft/css/field.css');
+        craft()->templates->includeJsResource('seoforcraft/js/field.js');
 
         $vars = array(
             'context' => $this->element
