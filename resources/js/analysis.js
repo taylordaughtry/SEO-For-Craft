@@ -23,8 +23,8 @@ var analyzer = (function() {
 	};
 
 	var processTitle = function () {
-		var title = document.getElementById('title'),
-			length = title.value.length;
+		var title = document.getElementById('title').value.toLowerCase(),
+			length = title.length;
 
 		if (length >= 40 && length <= 60) {
 			_addItem(responses.idealTitle, 'positive');
