@@ -40,13 +40,15 @@ var analyzer = (function() {
 	};
 
 	var run = function () {
-		var focusKeyword = document.querySelectorAll('[data-ref="focusKeyword"]')[0];
+		var keywordInput = document.querySelectorAll('[data-ref="focusKeyword"]')[0];
 
 		analysisContainer.innerHTML = '';
 
 		items = [];
 
-		if (focusKeyword.value.length) {
+		if (keywordInput.value.length) {
+			focusKeyword = keywordInput.value;
+
 			processTitle();
 		} else {
 			_addItem(responses.noKeyword, 'negative');
