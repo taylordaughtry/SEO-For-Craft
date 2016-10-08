@@ -1,10 +1,12 @@
 var analyzer = (function() {
 	var analysisContainer = document.querySelectorAll('[data-ref="analysis"]')[0],
 		items = [],
+		focusKeyword = '',
 		responses = {
 			idealTitle: 'Your title is an ideal length.',
 			shortTitle: 'Your title is too short.',
-			longTitle: 'Your title is too long.'
+			longTitle: 'Your title is too long.',
+			noKeyword: 'You don\'t have a focus keyword set.'
 		};
 
 	var _addItem = function(text, errorType) {
@@ -30,11 +32,17 @@ var analyzer = (function() {
 	};
 
 	var run = function () {
+		var focusKeyword = document.querySelectorAll('[data-ref="focusKeyword"]')[0];
+
 		analysisContainer.innerHTML = '';
 
 		items = [];
 
-		processTitle();
+		if (focusKeyword.value.length) {
+			processTitle();
+		} else {
+			_addItem(responses.noKeyword, 'negative');
+		}
 
 		items.forEach(function(el, i) {
 			analysisContainer.appendChild(items[i]);
