@@ -10,7 +10,9 @@ var analyzer = (function() {
 			titleKeyword: 'Your keyword appears in the title.',
 			noKeyword: 'You don\'t have a focus keyword set.',
 			keywordInSlug: 'Your keyword is present in the URL.',
-			keywordNotInSlug: 'Your keyword isn\'t in the URL.'
+			keywordNotInSlug: 'Your keyword isn\'t in the URL.',
+			keywordInDesc: 'Your keyword appears in the meta description.',
+			keywordNotInDesc: 'Your keyword isn\'t in the meta description.',
 		};
 
 	var _addItem = function(text, errorType) {
@@ -41,6 +43,16 @@ var analyzer = (function() {
 		}
 	};
 
+	var processDescription = function () {
+		var description = document.querySelectorAll('input[id*=metaDescription]')[0].value.toLowerCase();
+
+		if (description.indexOf(focusKeyword) > -1) {
+			_addItem(responses.keywordInDesc, 'positive');
+		} else {
+			_addItem(responses.keywordNotInDesc, 'negative');
+		}
+	};
+
 	var processSlug = function () {
 		var slug = document.getElementById('slug').value.toLowerCase();
 
@@ -62,6 +74,7 @@ var analyzer = (function() {
 			focusKeyword = keywordInput.value.toLowerCase();
 
 			processTitle();
+			processDescription();
 			processSlug();
 		} else {
 			_addItem(responses.noKeyword, 'negative');
