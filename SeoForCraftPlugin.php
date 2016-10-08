@@ -111,6 +111,7 @@ class SeoForCraftPlugin extends BasePlugin
 			);
 
 			craft()->templates->includeCssResource('seoforcraft/css/analysis.css');
+			craft()->templates->includeJsResource('seoforcraft/js/analysis.js');
 
 			$output = craft()->templates->render('analysis', $data);
 
