@@ -8,7 +8,9 @@ var analyzer = (function() {
 			longTitle: 'Your title is too long.',
 			noTitleKeyword: 'Your keyword isn\'t in the title.',
 			titleKeyword: 'Your keyword appears in the title.',
-			noKeyword: 'You don\'t have a focus keyword set.'
+			noKeyword: 'You don\'t have a focus keyword set.',
+			keywordInSlug: 'Your keyword is present in the URL.',
+			keywordNotInSlug: 'Your keyword isn\'t in the URL.'
 		};
 
 	var _addItem = function(text, errorType) {
@@ -32,10 +34,20 @@ var analyzer = (function() {
 			_addItem(responses.longTitle, 'negative');
 		}
 
-		if (title.value.indexOf(focusKeyword) > -1) {
+		if (title.indexOf(focusKeyword) > -1) {
 			_addItem(responses.titleKeyword, 'positive');
 		} else {
 			_addItem(responses.noTitleKeyword, 'negative');
+		}
+	};
+
+	var processSlug = function () {
+		var slug = document.getElementById('slug').value.toLowerCase();
+
+		if (slug.indexOf(focusKeyword) > -1) {
+			_addItem(responses.keywordInSlug, 'positive');
+		} else {
+			_addItem(responses.keywordNotInSlug, 'negative');
 		}
 	};
 
@@ -47,9 +59,10 @@ var analyzer = (function() {
 		items = [];
 
 		if (keywordInput.value.length) {
-			focusKeyword = keywordInput.value;
+			focusKeyword = keywordInput.value.toLowerCase();
 
 			processTitle();
+			processSlug();
 		} else {
 			_addItem(responses.noKeyword, 'negative');
 		}
