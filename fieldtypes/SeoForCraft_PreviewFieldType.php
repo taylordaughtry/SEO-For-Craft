@@ -16,7 +16,7 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
 
     /**
      * This method generates the 'Snippet Preview' element on entry detail
-     * pages. Note that this fieldtype does not store data, and simply servces
+     * pages. Note that this fieldtype does not store data, and simply serves
      * as an easy way to add HTML to the page for the user's visual reference.
      *
      * @public
