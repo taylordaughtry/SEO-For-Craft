@@ -103,7 +103,7 @@ var analyzer = (function() {
 	 * @public
 	 * @return void
 	 */
-	var processBody = function () {
+	var checkBodyLength = function () {
 		var content = $('#fields-body').redactor('code.get'),
 			plainText = $('#fields-body').redactor('clean.getPlainText', content),
 			wordCount = textstatistics(plainText).wordCount();
@@ -136,7 +136,7 @@ var analyzer = (function() {
 			processTitle();
 			processDescription();
 			processSlug();
-			processBody();
+			checkBodyLength();
 		} else {
 			_addItem(responses.noKeyword, 'negative');
 		}
