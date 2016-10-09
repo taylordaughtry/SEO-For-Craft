@@ -91,8 +91,10 @@ var analyzer = (function() {
 	};
 })();
 
-analyzer.run();
-
-setInterval(function() {
+document.addEventListener('DOMContentLoaded', function() {
 	analyzer.run();
-}, 1000);
+
+	setInterval(function() {
+		analyzer.run();
+	}, 1000);
+});
