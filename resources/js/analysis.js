@@ -13,6 +13,8 @@ var analyzer = (function() {
 			keywordNotInSlug: 'Your keyword isn\'t in the URL.',
 			keywordInDesc: 'Your keyword appears in the meta description.',
 			keywordNotInDesc: 'Your keyword isn\'t in the meta description.',
+			bodyLengthOkay: 'Your content has at least 300 words.',
+			bodyLengthLow: 'Your content has {c} words. Minimum is 300.'
 		};
 
 	var _addItem = function(text, errorType) {
@@ -63,6 +65,19 @@ var analyzer = (function() {
 		}
 	};
 
+	var processBody = function () {
+		var redactorInstance = $('#fields-body').redactor,
+			content = redactorInstance('code.get'),
+			plainText = redactorInstance('clean.getPlainText', content),
+			wordCount = textstatistics(plainText).wordCount();
+
+		if (wordCount > 300) {
+			_addItem(responses.bodyLengthOkay, 'positive');
+		} else {
+			_addItem(responses.bodyLengthLow.replace('{c}', wordCount), 'negative');
+		}
+	};
+
 	var run = function () {
 		var keywordInput = document.querySelectorAll('[data-ref="focusKeyword"]')[0];
 
@@ -76,6 +91,7 @@ var analyzer = (function() {
 			processTitle();
 			processDescription();
 			processSlug();
+			processBody();
 		} else {
 			_addItem(responses.noKeyword, 'negative');
 		}
