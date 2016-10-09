@@ -14,7 +14,11 @@ var analyzer = (function() {
 			keywordInDesc: 'Your keyword appears in the meta description.',
 			keywordNotInDesc: 'Your keyword isn\'t in the meta description.',
 			bodyLengthOkay: 'Your content has at least 300 words.',
-			bodyLengthLow: 'Your content has {c} words. Minimum is 300.'
+			bodyLengthLow: 'Your content has {c} words. Minimum is 300.',
+			densityFail: 'Your focus keyword isn\'t in your content.',
+			densityLow: 'Your keyword density is too low. ({d}%)',
+			densityOkay: 'Your keyword density is ideal. ({d}%)',
+			densityHigh: 'Your keyword density is too high. ({d}%)'
 		};
 
 	/**
@@ -120,6 +124,46 @@ var analyzer = (function() {
 	};
 
 	/**
+	 * Checks how often the focus keyword appears in the body content. There's
+	 * a general consensus that roughly 2.5% is the maximum acceptable density
+	 * for 'optimization' of a certain keyword.
+	 *
+	 * In 2016, human-readable content is more important than keyword density,
+	 * but this is included as a general guideline for making sure you actually
+	 * USE your focus keyword inside your content.
+	 *
+	 * TODO: Abstract the field text retrieval process.
+	 *
+	 * @public
+	 * @return void
+	 */
+	var checkDensity = function () {
+		var content = $('#fields-body').redactor('code.get'),
+			plainText = $('#fields-body').redactor('clean.getPlainText', content),
+			words = plainText.split(/[^a-z0-9']+/i),
+			count = 0,
+			density = 0.00;
+
+		words.forEach(function(word, i) {
+			if (word.toLowerCase() === focusKeyword) {
+				count++;
+			}
+		});
+
+		density = ((count / words.length) * 100).toFixed(2);
+
+		if (density === '0.00') {
+			_addItem(responses.densityFail.replace('{d}', density), 'negative');
+		} else if (density <= 2.2) {
+			_addItem(responses.densityLow.replace('{d}', density), 'acceptable');
+		} else if (density > 2.2 && density <= 2.5) {
+			_addItem(responses.densityOkay.replace('{d}', density), 'positive');
+		} else if (density > 2.5) {
+			_addItem(responses.densityHigh.replace('{d}', density), 'negative');
+		}
+	};
+
+	/**
 	 * Initializes the content analyzation process. This method is called once
 	 * every 1,000 ms; NOT on input changes. After trying both ways, this
 	 * method is not only simpler, but a bit more performant.
@@ -141,6 +185,7 @@ var analyzer = (function() {
 			processDescription();
 			processSlug();
 			checkBodyLength();
+			checkDensity();
 		} else {
 			_addItem(responses.noKeyword, 'negative');
 		}
