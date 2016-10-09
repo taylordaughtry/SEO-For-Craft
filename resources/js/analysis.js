@@ -17,6 +17,13 @@ var analyzer = (function() {
 			bodyLengthLow: 'Your content has {c} words. Minimum is 300.'
 		};
 
+	/**
+	 * Adds an item to be displayed in the Analysis sidebar.
+	 *
+	 * @private
+	 * @param {string} text The text to be displayed in this message.
+	 * @param {string} errorType The error class: positive/negative/acceptable
+	 */
 	var _addItem = function(text, errorType) {
 		var span = document.createElement('span');
 
@@ -26,6 +33,13 @@ var analyzer = (function() {
 		items.push(span);
 	};
 
+	/**
+	 * Handles title processing, which includes length checks as well as
+	 * checking for the inclusion of the focus keyword.
+	 *
+	 * @public
+	 * @return void
+	 */
 	var processTitle = function () {
 		var title = document.getElementById('title').value.toLowerCase(),
 			length = title.length;
@@ -45,6 +59,13 @@ var analyzer = (function() {
 		}
 	};
 
+	/**
+	 * Handles description processing, which include checking for the presence
+	 * of the focus keyword.
+	 *
+	 * @public
+	 * @return void
+	 */
 	var processDescription = function () {
 		var description = document.querySelectorAll('input[id*=metaDescription]')[0].value.toLowerCase();
 
@@ -55,6 +76,13 @@ var analyzer = (function() {
 		}
 	};
 
+	/**
+	 * Handles slug processing, which includes checking for the presence of the
+	 * focus keyword.
+	 *
+	 * @public
+	 * @return void
+	 */
 	var processSlug = function () {
 		var slug = document.getElementById('slug').value.toLowerCase();
 
@@ -65,6 +93,16 @@ var analyzer = (function() {
 		}
 	};
 
+	/**
+	 * Handles body processing, which includes checking for proper content
+	 * length. Right now this method gets the field content via the Redactor
+	 * API, which is a little dirty, but gets the job done.
+	 *
+	 * TODO: Is there a cleaner way to get the body textContent?
+	 *
+	 * @public
+	 * @return void
+	 */
 	var processBody = function () {
 		var content = $('#fields-body').redactor('code.get'),
 			plainText = $('#fields-body').redactor('clean.getPlainText', content),
@@ -77,6 +115,14 @@ var analyzer = (function() {
 		}
 	};
 
+	/**
+	 * Initializes the content analyzation process. This method is called once
+	 * every 1,000 ms; NOT on input changes. After trying both ways, this
+	 * method is not only simpler, but is a bit more performant.
+	 *
+	 * @public
+	 * @return void
+	 */
 	var run = function () {
 		var keywordInput = document.querySelectorAll('[data-ref="focusKeyword"]')[0];
 
