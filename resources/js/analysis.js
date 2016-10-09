@@ -40,6 +40,31 @@ var analyzer = (function() {
 		});
 	};
 
+	var _sortItems = function() {
+		var positive = [],
+			negative = [],
+			acceptable = [],
+			i;
+
+		for (i = 0; i < items.length; i++) {
+			var obj = items[i];
+
+			switch (obj.score) {
+				case 'positive':
+					positive.push(obj);
+					break;
+				case 'negative':
+					negative.push(obj);
+					break;
+				case 'acceptable':
+					acceptable.push(obj);
+					break;
+			}
+		}
+
+		items = negative.concat(acceptable.concat(positive));
+	};
+
 	/**
 	 * Handles title processing, which includes length checks as well as
 	 * checking for the inclusion of the focus keyword.
@@ -189,6 +214,8 @@ var analyzer = (function() {
 		} else {
 			_addItem(responses.noKeyword, 'negative');
 		}
+
+		_sortItems();
 
 		items.forEach(function(el, i) {
 			var item = items[i];
