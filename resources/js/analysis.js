@@ -26,16 +26,16 @@ var analyzer = (function() {
 	 *
 	 * @private
 	 * @param {string} text The text to be displayed in this message.
-	 * @param {string} errorType The error class: positive/negative/acceptable
+	 * @param {string} scoreType The score class: positive/negative/acceptable
 	 */
-	var _addItem = function(text, errorType) {
+	var _addItem = function(text, scoreType) {
 		var span = document.createElement('span');
 
-		span.className = 'analysis__item ' + errorType;
+		span.className = 'analysis__item ' + scoreType;
 		span.innerText = text;
 
 		items.push({
-			score: errorType,
+			score: scoreType,
 			element: span
 		});
 	};
