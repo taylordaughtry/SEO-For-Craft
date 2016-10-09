@@ -66,9 +66,8 @@ var analyzer = (function() {
 	};
 
 	var processBody = function () {
-		var redactorInstance = $('#fields-body').redactor,
-			content = redactorInstance('code.get'),
-			plainText = redactorInstance('clean.getPlainText', content),
+		var content = $('#fields-body').redactor('code.get'),
+			plainText = $('#fields-body').redactor('clean.getPlainText', content),
 			wordCount = textstatistics(plainText).wordCount();
 
 		if (wordCount > 300) {
