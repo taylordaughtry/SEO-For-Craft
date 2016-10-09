@@ -99,6 +99,7 @@ var analyzer = (function() {
 	 * API, which is a little dirty, but gets the job done.
 	 *
 	 * TODO: Is there a cleaner way to get the body textContent?
+	 * TODO: Get the proper namespaced ID of the body element
 	 *
 	 * @public
 	 * @return void
