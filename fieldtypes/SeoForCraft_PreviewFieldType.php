@@ -32,6 +32,7 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
 
         craft()->templates->includeCssResource('seoforcraft/css/field.css');
         craft()->templates->includeJsResource('seoforcraft/js/field.js');
+        craft()->templates->includeJsResource('seoforcraft/js/textstatistics.js');
 
         $vars = array(
             'context' => $this->element
