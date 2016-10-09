@@ -119,7 +119,7 @@ var analyzer = (function() {
 	/**
 	 * Initializes the content analyzation process. This method is called once
 	 * every 1,000 ms; NOT on input changes. After trying both ways, this
-	 * method is not only simpler, but is a bit more performant.
+	 * method is not only simpler, but a bit more performant.
 	 *
 	 * @public
 	 * @return void
