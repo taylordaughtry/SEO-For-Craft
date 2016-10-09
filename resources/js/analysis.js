@@ -30,7 +30,10 @@ var analyzer = (function() {
 		span.className = 'analysis__item ' + errorType;
 		span.innerText = text;
 
-		items.push(span);
+		items.push({
+			score: errorType,
+			element: span
+		});
 	};
 
 	/**
@@ -143,7 +146,9 @@ var analyzer = (function() {
 		}
 
 		items.forEach(function(el, i) {
-			analysisContainer.appendChild(items[i]);
+			var item = items[i];
+
+			analysisContainer.appendChild(item.element);
 		});
 	};
 
