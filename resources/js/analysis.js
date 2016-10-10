@@ -44,6 +44,13 @@ var analyzer = (function() {
 		});
 	};
 
+	/**
+	 * Sort items before display to move satisfied conditions to the bottom.
+	 * Items that still need to be addressed will appear at the top of the list.
+	 *
+	 * @private
+	 * @return void
+	 */
 	var _sortItems = function() {
 		var positive = [],
 			negative = [],
