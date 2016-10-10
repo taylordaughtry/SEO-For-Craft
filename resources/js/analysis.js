@@ -18,7 +18,11 @@ var analyzer = (function() {
 			densityFail: 'Your focus keyword isn\'t in your content.',
 			densityLow: 'Your keyword density is too low. ({d}%)',
 			densityOkay: 'Your keyword density is ideal. ({d}%)',
-			densityHigh: 'Your keyword density is too high. ({d}%)'
+			densityHigh: 'Your keyword density is too high. ({d}%)',
+			headingsPass: 'Your keyword is in a primary heading.',
+			headingsAcceptable: 'Your keyword is in a secondary heading.',
+			headingsFail: 'Your keyword isn\'t in any headings.',
+			mainHeadingFails: 'You shouldn\'t have an H1 in your content.'
 		};
 
 	/**
@@ -63,6 +67,25 @@ var analyzer = (function() {
 		}
 
 		items = negative.concat(acceptable.concat(positive));
+	};
+
+	/**
+	 * Builds a document fragment for tag queries by adding a div with the
+	 * content set as the innerHTML.
+	 *
+	 * @private
+	 * @param {string} content The HTML template to be parsed
+	 * @return {document} A valid document element
+	 */
+	var _buildFragment = function (content) {
+		var frag = document.createDocumentFragment(),
+			div = document.createElement('div');
+
+		div.innerHTML = content;
+
+		frag.appendChild(div);
+
+		return frag;
 	};
 
 	/**
@@ -123,6 +146,57 @@ var analyzer = (function() {
 		} else {
 			_addItem(responses.keywordNotInSlug, 'negative');
 		}
+	};
+
+	/**
+	 * Check to ensure that at least a primary or secondary heading contains
+	 * the focus keyword. Also confirm that there isn't an H1 in the content,
+	 * since your entry title should ideally be the only H1 on the page.
+	 *
+	 * TODO: Check to ensure there's no H1 in the content. (Should only be 1.)
+	 * TODO: Clarify heading messages.
+	 * TODO: Abstract the field text retrieval process.
+	 *
+	 * @public
+	 * @return void
+	 */
+	var processHeadings = function () {
+		var content = $('#fields-body').redactor('code.get'),
+			frag = _buildFragment(content),
+			results = frag.querySelectorAll('h1,h2,h3,h4,h5,h6'),
+			headings = [],
+			primary = 0,
+			secondary = 0,
+			i;
+
+		for (i = 0; i < results.length; i++) {
+			var $el = results[i],
+				nodeName = $el.nodeName;
+
+			if ($el.textContent.toLowerCase().indexOf(focusKeyword) > -1) {
+				if (nodeName === 'H2' || nodeName === 'H3') {
+					primary++;
+				} else {
+					secondary++;
+				}
+			}
+
+			if (nodeName === 'H1') {
+				_addItem(responses.mainHeadingFails, 'negative');
+			}
+		}
+
+		if (primary > 0) {
+			_addItem(responses.headingsPass, 'positive');
+
+			return;
+		} else if (secondary > 0) {
+			_addItem(responses.headingsAcceptable, 'acceptable');
+
+			return;
+		}
+
+		_addItem(responses.headingsFail, 'negative');
 	};
 
 	/**
@@ -209,6 +283,7 @@ var analyzer = (function() {
 			processTitle();
 			processDescription();
 			processSlug();
+			processHeadings();
 			checkBodyLength();
 			checkDensity();
 		} else {
