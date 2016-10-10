@@ -160,7 +160,6 @@ var analyzer = (function() {
 	 * the focus keyword. Also confirm that there isn't an H1 in the content,
 	 * since your entry title should ideally be the only H1 on the page.
 	 *
-	 * TODO: Check to ensure there's no H1 in the content. (Should only be 1.)
 	 * TODO: Clarify heading messages.
 	 * TODO: Abstract the field text retrieval process.
 	 *
