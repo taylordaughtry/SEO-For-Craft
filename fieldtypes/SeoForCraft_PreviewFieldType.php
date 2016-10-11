@@ -11,7 +11,7 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
 
     public function defineContentAttribute()
     {
-        return false;
+        return AttributeType::Mixed;
     }
 
     /**
