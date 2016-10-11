@@ -10,7 +10,7 @@ class SeoForCraftPlugin extends BasePlugin
 	public $feedUrl = 'https://raw.githubusercontent.com/taylordaughtry/seoforcraft/master/releases.json';
 	public $pluginName = 'SEO for Craft';
 	public $schema = '0.1.0';
-	public $version = '0.1.0';
+	public $version = '1.8.3';
 
 	public function getName()
 	{
