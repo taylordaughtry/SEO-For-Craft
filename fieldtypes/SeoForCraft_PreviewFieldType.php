@@ -6,7 +6,7 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
 
     public function getName()
     {
-        return Craft::t('Preview');
+        return Craft::t('SEO');
     }
 
     public function defineContentAttribute()
@@ -26,10 +26,6 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
      */
     public function getInputHtml($name, $value)
     {
-        $oldPath = craft()->path->getTemplatesPath();
-        $newPath = craft()->path->getPluginsPath().'seoforcraft/templates';
-        craft()->path->setTemplatesPath($newPath);
-
         craft()->templates->includeCssResource('seoforcraft/css/field.css');
         craft()->templates->includeJsResource('seoforcraft/js/field.js');
         craft()->templates->includeJsResource('seoforcraft/js/textstatistics.js');
@@ -38,9 +34,7 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
             'context' => $this->element
         );
 
-        $html = craft()->templates->render('preview', $vars);
-
-        craft()->path->setTemplatesPath($oldPath);
+        $html = craft()->templates->render('seoforcraft/field', $vars);
 
         return $html;
     }
