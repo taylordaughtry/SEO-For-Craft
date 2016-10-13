@@ -1,7 +1,187 @@
+{% import "_includes/forms" as forms %}
+
 <div class="snippet">
-	<span class="snippet__title" data-ref="metaTitle">{% if context.metaTitle|default %}{{ context.metaTitle }}{% else %}{{ context.title }}{% endif %}</span>
-	<span class="snippet__url">{% if context.url|default %}{{ context.url }}{% endif %}</span>
+	<span class="snippet__title" data-ref="metaTitle">{{ values.metaTitle|default(context.title) }}</span>
+	<span class="snippet__url">{{ context.url }}</span>
 	<div class="snippet__desc">
-		<span class="snippet__date">{{ context.dateCreated|date('F j, Y') }} -</span> <span data-ref="metaDescription">{% if context.metaDescription|default %}{{ context.metaDescription }}{% else %}<em>You haven't set a Meta Description yet.</em>{% endif %}</span>
+		<span class="snippet__date">{{ context.dateCreated|date('F j, Y') }} -</span> <span data-ref="metaDescription">{% if values.metaDescription|default %}{{ values.metaDescription|default }}{% else %}<em>You haven't set a Meta Description yet.</em>{% endif %}</span>
 	</div>
 </div>
+
+{{ forms.textField({
+	label: 'Meta Title'|t,
+	name: name ~ '[metaTitle]',
+	instructions: 'This will show in search results as the title of this page.',
+	value: values.metaTitle|default
+}) }}
+
+{{ forms.textField({
+	label: 'Meta Description'|t,
+	name: name ~ '[metaDescription]',
+	instructions: 'This is a short snippet that teases the user about the content on this page. Note that google doesn\'t always use this.',
+	value: values.metaDescription|default
+}) }}
+
+<div class="field">
+	<div class="heading">
+		<label for="ogType">Open Graph Type</label>
+		<div class="instructions">
+			<p>What type should this entry be?</p>
+		</div>
+	</div>
+	<div class="input">
+		{{ forms.select({
+			name: name ~ '[ogType]',
+			options: [
+				{
+					label: 'Article',
+					value: 'article'
+				},
+				{
+					label: 'Website',
+					value: 'website'
+				}
+			],
+			value: values.ogType|default
+		}) }}
+	</div>
+</div>
+
+<div class="field">
+	<div class="heading">
+		<label for="ogImage">Open Graph Image</label>
+		<div class="instructions">
+			<p>Upload an image that's at least 1200 x 630, in any valid image format.</p>
+		</div>
+	</div>
+	<div class="input">
+		{{ forms.elementSelect({
+			id: 'ogImage',
+			name: name ~ '[ogImage]',
+			elementType: elementType,
+			elements: values.ogImage,
+			criteria: {
+				'kind': ['image'],
+				'localeEnabled': null,
+				'locale': craft.locale
+			},
+			jsClass: 'Craft.AssetSelectInput',
+			addButtonLabel: "Select an Image" |t,
+			viewMode: 'large',
+			limit: 1
+		}) }}
+	</div>
+</div>
+
+{{ forms.textField({
+	label: 'Open Graph Title'|t,
+	name: name ~ '[ogTitle]',
+	instructions: 'If this is left blank, Craft will try the Meta Title, and finally default to the Entry Title.',
+	value: values.ogTitle|default
+}) }}
+
+{{ forms.textField({
+	label: 'Open Graph Description'|t,
+	name: name ~ '[ogDescription]',
+	instructions: 'This is displayed on Facebook when you share this page.',
+	value: values.ogDescription|default
+}) }}
+
+<div class="field">
+	<div class="heading">
+		<label for="twitterType">Twitter Card Type</label>
+		<div class="instructions">
+			<p>What type should this entry be?</p>
+		</div>
+	</div>
+	<div class="input">
+		{{ forms.select({
+			id: 'twitterType',
+			name: name ~ '[twitterType]',
+			options: [
+				{
+					label: 'Summary',
+					value: 'summary'
+				},
+				{
+					label: 'Summary Large Image',
+					value: 'summaryLargeImage'
+				}
+			],
+			value: values.twitterType|default
+		}) }}
+	</div>
+</div>
+
+{{ forms.textField({
+	label: 'Twitter Title'|t,
+	name: name ~ '[twitterTitle]',
+	instructions: 'Specify an optional title to be displayed on the Twitter Card.',
+	value: values.twitterTitle|default
+}) }}
+
+{{ forms.textField({
+	label: 'Twitter Description'|t,
+	name: name ~ '[twitterDescription]',
+	instructions: 'Specify an optional description to be displayed on the Twitter Card.',
+	value: values.twitterDescription|default
+}) }}
+
+<div class="field" data-ref="twitterImage">
+	<div class="heading">
+		<label for="twitterImage">Twitter Image</label>
+		<div class="instructions">
+			<p>Upload an image that's at least 120 x 120, in any valid image format.</p>
+		</div>
+	</div>
+	<div class="input">
+		{{ forms.elementSelect({
+			id: 'twitterImage',
+			name: name ~ '[twitterImage]',
+			elementType: elementType,
+			elements: values.twitterImage,
+			criteria: {
+				'kind': ['image'],
+				'localeEnabled': null,
+				'locale': craft.locale
+			},
+			jsClass: 'Craft.AssetSelectInput',
+			addButtonLabel: "Select an Image" |t,
+			viewMode: 'large',
+			limit: 1
+		}) }}
+	</div>
+</div>
+
+<div class="field" data-ref="twitterLargeImage">
+	<div class="heading">
+		<label for="twitterLargeImage">Twitter Large Image</label>
+		<div class="instructions">
+			<p>Upload an image that's at least 280 x 150, in any valid image format.</p>
+		</div>
+	</div>
+	<div class="input">
+		{{ forms.elementSelect({
+			id: 'twitterLargeImage',
+			name: name ~ '[twitterLargeImage]',
+			elementType: elementType,
+			elements: values.twitterLargeImage,
+			criteria: {
+				'kind': ['image'],
+				'localeEnabled': null,
+				'locale': craft.locale
+			},
+			jsClass: 'Craft.AssetSelectInput',
+			addButtonLabel: "Select an Image" |t,
+			viewMode: 'large',
+			limit: 1
+		}) }}
+	</div>
+</div>
+
+{{ forms.lightswitchField({
+	label: 'No Index',
+	instructions: 'Ask search engines not to index this site.',
+	name: name ~ 'noIndex',
+	on: values.noIndex|default
+}) }}
