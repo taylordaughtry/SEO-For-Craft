@@ -1,7 +1,6 @@
 <div class="pane">
-	{# TODO: Save this value #}
 	<h2>Focus Keyword</h2>
-	<input type="text" class="text fullwidth" value="Craft CMS" data-ref="focusKeyword">
+	<input type="text" class="text fullwidth" name="[focusKeyword]" value="{{ entry.seo.focusKeyword|default }}" data-ref="focusKeyword">
 </div>
 <div class="pane">
 	<h2>Content Analysis</h2>
