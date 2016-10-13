@@ -37,7 +37,7 @@ var fieldHandler = (function() {
 	 * @return void
 	 */
 	function _toggleField (fieldName) {
-		var $el = document.querySelectorAll('div.field[id*="' + fieldName + '"]')[0],
+		var $el = document.querySelectorAll('[data-ref="' + fieldName + '"]')[0],
 			currentDisplay = window.getComputedStyle($el, null).getPropertyValue('display');
 
 		$el.style.display = currentDisplay !== 'none' ? 'none' : 'block';
