@@ -129,7 +129,7 @@ var analyzer = (function() {
 	 * @return void
 	 */
 	var processDescription = function () {
-		var description = document.querySelectorAll('input[id*=metaDescription]')[0].value.toLowerCase();
+		var description = document.querySelectorAll('input[name*=metaDescription]')[0].value.toLowerCase();
 
 		if (description.indexOf(focusKeyword) > -1) {
 			_addItem(responses.keywordInDesc, 'positive');
