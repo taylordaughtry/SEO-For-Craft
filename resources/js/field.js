@@ -78,9 +78,9 @@ fieldHandler.ready(function() {
 	fieldHandler.bind('metaDescription');
 
 	if (twitterType.value === 'summmaryLargeImage') {
-		fieldHandler.toggleField('twitterLargeImage');
-	} else {
 		fieldHandler.toggleField('twitterImage');
+	} else {
+		fieldHandler.toggleField('twitterLargeImage');
 	}
 
 	twitterType.addEventListener('change', function() {
