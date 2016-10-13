@@ -26,16 +26,25 @@ class SeoForCraft_PreviewFieldType extends BaseFieldType
      */
     public function getInputHtml($name, $value)
     {
+        $id = craft()->templates->formatInputId($name);
+        $namespacedId = craft()->templates->namespaceInputId($id);
+
         craft()->templates->includeCssResource('seoforcraft/css/field.css');
         craft()->templates->includeJsResource('seoforcraft/js/field.js');
         craft()->templates->includeJsResource('seoforcraft/js/textstatistics.js');
 
+        $value['ogImage'] = isset($value['ogImage']) ? array(craft()->assets->getFileById($value['ogImage'])) : '';
+        $value['twitterImage'] = isset($value['twitterImage']) ? array(craft()->assets->getFileById($value['twitterImage'])) : '';
+        $value['twitterLargeImage'] = isset($value['twitterLargeImage']) ? array(craft()->assets->getFileById($value['twitterLargeImage'])) : '';
+
         $vars = array(
-            'context' => $this->element
+            'context' => $this->element,
+            'id' => $namespacedId,
+            'name' => $name,
+            'values' => $value,
+            'elementType' => craft()->elements->getElementType(ElementType::Asset)
         );
 
-        $html = craft()->templates->render('seoforcraft/field', $vars);
-
-        return $html;
+        return craft()->templates->render('seoforcraft/field', $vars);
     }
 }
