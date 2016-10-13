@@ -1,11 +1,11 @@
 {# TODO: Add optional Suffix for titles #}
-<title>{% if entry.metaTitle|default %}{{ entry.metaTitle }}{% else %}{{ entry.title }}{% endif %}</title>
+<title>{% if entry.seo.metaTitle|default %}{{ entry.seo.metaTitle }}{% else %}{{ entry.title }}{% endif %}</title>
 
-{% if entry.metaDescription|default %}
-	<meta name="description" content="{{ entry.metaDescription }}">
+{% if entry.seo.metaDescription|default %}
+	<meta name="description" content="{{ entry.seo.metaDescription }}">
 {% endif %}
 
-{%- if entry.noIndex|default %}
+{%- if entry.seo.noIndex|default %}
 	 <meta name="robots" content="noindex, follow">
 {% endif -%}
 
@@ -15,39 +15,39 @@
 	<link rel="publisher" href="https://plus.google.com/{{ settings.googleId }}">
 {% endif %}
 
-<meta property="og:type" content="{% if entry.ogType.value|default %}{{ entry.ogType.value }}{% else %}website{% endif %}">
+<meta property="og:type" content="{% if entry.seo.ogType.value|default %}{{ entry.seo.ogType.value }}{% else %}website{% endif %}">
 <meta property="og:site_name" content="{{ siteName }}">
 <meta property="og:url" content="{{ entry.url|default(craft.request.url) }}" itemprop="url">
-<meta property="og:title" content="{% if entry.ogTitle|default %}{{ entry.ogTitle }}{% elseif entry.metaTitle|default %}{{ entry.metaTitle }}{% else %}{{ entry.title }}{% endif %}" itemprop="name">
-{% if entry.ogDescription|default or entry.metaDescription|default -%}
-	<meta property="og:description" content="{% if entry.ogDescription|default %}{{ entry.ogDescription }}{% elseif entry.metaDescription %}{{ entry.metaDescription }}{% endif %}" itemprop="description">
+<meta property="og:title" content="{% if entry.seo.ogTitle|default %}{{ entry.seo.ogTitle }}{% elseif entry.seo.metaTitle|default %}{{ entry.seo.metaTitle }}{% else %}{{ entry.title }}{% endif %}" itemprop="name">
+{% if entry.seo.ogDescription|default or entry.seo.metaDescription|default -%}
+	<meta property="og:description" content="{% if entry.seo.ogDescription|default %}{{ entry.seo.ogDescription }}{% elseif entry.seo.metaDescription %}{{ entry.seo.metaDescription }}{% endif %}" itemprop="description">
 {% endif %}
 
-{%- if entry.ogType.value|default and entry.ogType.value == 'article' -%}
+{%- if entry.seo.ogType.value|default and entry.seo.ogType.value == 'article' -%}
 	<meta property="article:published_time" content="{{ entry.dateCreated.iso8601 }}" itemprop="datePublished">
 	<meta property="article:modified_time" content="{{ entry.dateUpdated.iso8601 }}" itemprop="dateModified">
 {%- endif %}
 
-{% if entry.ogImage|default %}
-	<meta property="og:image" content="{{ entry.ogImage.first.getUrl('ogImageTransform') }}" itemprop="image">
+{% if entry.seo.ogImage|default %}
+	<meta property="og:image" content="{{ craft.assets.id(entry.seo.ogImage).first.getUrl('ogImageTransform') }}" itemprop="image">
 {% elseif settings.socialImage|default|length %}
-	<meta property="og:image" content="{{ craft.assets.id(settings.socialImage[0]).first.geturl('ogImageTransform') }}" itemprop="image">
+	<meta property="og:image" content="{{ craft.assets.id(settings.socialImage).first.getUrl('ogImageTransform') }}" itemprop="image">
 {% endif %}
 
 {% if settings.twitterHandle|default %}
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="@{{ settings.twitterHandle }}">
-	{% if entry.twitterTitle|default %}
+	{% if entry.seo.twitterTitle|default %}
 		<meta name="twitter:title" content="{{ entry.twitterTitle }}">
 	{% endif %}
-	{% if entry.twitterDescription|default %}
-		<meta name="twitter:description" content="{{ entry.twitterDescription }}">
+	{% if entry.seo.twitterDescription|default %}
+		<meta name="twitter:description" content="{{ entry.seo.twitterDescription }}">
 	{% endif %}
-	{% if entry.twitterType|default %}
-		{% if entry.twitterType == 'summaryLargeImage' %}
-			<meta name="twitter:image" content="{{ entry.twitterLargeImage.first.getUrl('twitterLargeImageTransform') }}">
-		{% elseif entry.twitterType == 'summary' %}
-			<meta name="twitter:image" content="{{ entry.twitterImage.first.getUrl('twitterImageTransform') }}">
+	{% if entry.seo.twitterType|default %}
+		{% if entry.seo.twitterType == 'summaryLargeImage' %}
+			<meta name="twitter:image" content="{{ craft.assets.id(entry.seo.twitterLargeImage).first.getUrl('twitterLargeImageTransform') }}">
+		{% elseif entry.seo.twitterType == 'summary' %}
+			<meta name="twitter:image" content="{{ craft.assets.id(entry.seo.twitterImage).first.getUrl('twitterImageTransform') }}">
 		{% endif %}
 	{% endif %}
 {% endif %}
